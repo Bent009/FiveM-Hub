@@ -1,0 +1,55 @@
+{
+  "name": "fivem-hub",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "fs-extra": "^11.3.5"
+  },
+  "devDependencies": {
+    "electron": "^42.4.0",
+    "electron-builder": "^26.15.3"
+  },
+  "build": {
+    "appId": "com.fivemhub.launcher",
+    "productName": "FiveM Hub",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "src/**/*",
+      "ui/**/*",
+      "data/**/*",
+      "assets/**/*",
+      "!landing-page/**/*",
+      "!config.json",
+      "!Profiles/**/*",
+      "!**/*.log",
+      "!**/*.dmp"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/logo-utama.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "assets/logo-utama.ico",
+      "uninstallerIcon": "assets/logo-utama.ico",
+      "installerHeaderIcon": "assets/logo-utama.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "FiveM Hub"
+    }
+  }
+}

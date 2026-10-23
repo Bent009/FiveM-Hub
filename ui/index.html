@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="obsidian">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <title>FiveM Hub</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="titlebar">
+        <div class="titlebar-brand">
+            <img id="titlebarThemeLogo" class="brand-logo titlebar-logo" src="../assets/logo-Obsidian Cyber.png" alt="FiveM Hub Logo" />
+            <span class="brand-title">FiveM Hub</span>
+            <span class="brand-version">v2.0</span>
+        </div>
+
+        <div class="titlebar-center">
+            <div id="fivemProcessBadge" class="process-badge idle">
+                <span id="fivemProcessDot" class="process-dot"></span>
+                <span id="fivemProcessText">FiveM: Siaga</span>
+            </div>
+            <button id="titlebarTierBadge" type="button" class="tier-badge tier-free" title="Status lisensi & fitur PRO">
+                FREE
+            </button>
+        </div>
+
+        <div class="titlebar-controls">
+            <div class="quick-theme-wrapper" title="Pilih tema tampilan">
+                <i class="ri-palette-line quick-theme-icon" aria-hidden="true"></i>
+                <select id="quickThemeSelect" class="quick-theme-select" aria-label="Pilih Tema">
+                    <option value="obsidian">Obsidian Cyber</option>
+                    <option value="midnight">Midnight Slate (PRO)</option>
+                    <option value="crimson">Crimson Amber (PRO)</option>
+                    <option value="monochrome">Clean Monochrome (PRO)</option>
+                </select>
+            </div>
+
+            <div class="window-buttons">
+                <button id="winMinBtn" class="win-btn" title="Perkecil" aria-label="Perkecil"><i class="ri-subtract-line"></i></button>
+                <button id="winMaxBtn" class="win-btn" title="Perbesar" aria-label="Perbesar"><i class="ri-checkbox-blank-line"></i></button>
+                <button id="winCloseBtn" class="win-btn win-close" title="Tutup" aria-label="Tutup"><i class="ri-close-line"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <div class="app-shell">
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <button class="nav-btn active" data-view="viewServers">
+                    <span class="nav-icon"><i class="ri-server-line"></i></span>
+                    <span class="nav-label">Server Hub</span>
+                </button>
+                <button class="nav-btn" data-view="viewPerformance">
+                    <span class="nav-icon"><i class="ri-flashlight-line"></i></span>
+                    <span class="nav-label">Performa</span>
+                </button>
+                <button class="nav-btn" data-view="viewCache">
+                    <span class="nav-icon"><i class="ri-database-2-line"></i></span>
+                    <span class="nav-label">Cache Hub</span>
+                </button>
+                <button class="nav-btn" data-view="viewMods">
+                    <span class="nav-icon"><i class="ri-puzzle-line"></i></span>
+                    <span class="nav-label">Mods Hub</span>
+                </button>
+                <button class="nav-btn" data-view="viewSettings">
+                    <span class="nav-icon"><i class="ri-settings-4-line"></i></span>
+                    <span class="nav-label">Pengaturan</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button id="sidebarTierBtn" type="button" class="sidebar-tier-card tier-free">
+                    <div class="sidebar-tier-top">
+                        <span id="sidebarTierLabel" class="sidebar-tier-badge">AKUN FREE</span>
+                        <span class="sidebar-tier-arrow"><i class="ri-arrow-right-up-line"></i></span>
+                    </div>
+                    <span id="sidebarTierSub" class="sidebar-tier-sub">Buka fitur PRO</span>
+                </button>
+                <p id="priorityStatus" class="sidebar-status-text">Status: Siap</p>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <section id="viewServers" class="view-section active">
+                <div class="view-header">
+                    <div>
+                        <h1>Server Hub</h1>
+                        <p class="view-subtitle">Klik kartu server untuk melihat daftar pemain aktif atau langsung masuk ke dalam game.</p>
+                    </div>
+                    <div class="view-actions">
+                        <button id="refreshServersBtn" class="btn btn-secondary"><i class="ri-refresh-line"></i> Segarkan Status</button>
+                        <button id="addServerBtn" class="btn btn-primary"><i class="ri-add-line"></i> Tambah Server</button>
+                    </div>
+                </div>
+
+                <div class="toolbar-bar">
+                    <div class="search-box">
+                        <span class="search-icon"><i class="ri-search-line"></i></span>
+                        <input
+                            id="serverSearchInput"
+                            type="text"
+                            placeholder="Cari nama server, nomor build, profil cache, atau kode join..."
+                            autocomplete="off"
+                        />
+                        <button id="clearSearchBtn" class="search-clear-btn hidden" title="Bersihkan pencarian" aria-label="Bersihkan pencarian"><i class="ri-close-line"></i></button>
+                    </div>
+                    <div class="filter-pills">
+                        <button class="filter-pill active" data-filter="all">
+                            <span><i class="ri-apps-2-line"></i> Semua</span>
+                            <span id="countAll" class="filter-count">0</span>
+                        </button>
+                        <button class="filter-pill" data-filter="favorites">
+                            <span><i class="ri-star-line"></i> Favorit</span>
+                            <span id="countFavorites" class="filter-count">0</span>
+                        </button>
+                        <button class="filter-pill" data-filter="online">
+                            <span><i class="ri-checkbox-blank-circle-line status-icon-online"></i> Hanya Online</span>
+                            <span id="countOnline" class="filter-count">0</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="serversContainer" class="servers-grid"></div>
+
+                <div id="serversEmptyState" class="empty-state hidden">
+                    <div class="empty-state-icon"><i class="ri-search-eye-line"></i></div>
+                    <h3>Server tidak ditemukan</h3>
+                    <p>Ubah kata kunci pencarian atau pilih filter lain untuk menampilkan daftar server.</p>
+                </div>
+            </section>
+
+            <section id="viewPerformance" class="view-section hidden">
+                <div class="view-header">
+                    <div class="title-with-info">
+                        <h1>Performa &amp; Proses</h1>
+                        <span
+                            class="info-tooltip-trigger"
+                            tabindex="0"
+                            data-tooltip="Atur prioritas proses Windows, alokasi thread CPU, dan waktu jeda koneksi otomatis saat menjalankan FiveM.exe."
+                        ><i class="ri-information-line"></i></span>
+                    </div>
+                </div>
+
+                <div class="bento-grid">
+                    <div class="bento-card bento-span-2">
+                        <div class="bento-card-header">
+                            <div class="title-with-info">
+                                <h2>Prioritas Proses</h2>
+                                <span
+                                    class="info-tooltip-trigger"
+                                    tabindex="0"
+                                    data-tooltip="Menentukan alokasi waktu CPU yang diberikan Windows untuk proses FiveM.exe."
+                                ><i class="ri-information-line"></i></span>
+                            </div>
+                            <span id="currentPriority" class="badge-pill">Prioritas: Memuat...</span>
+                        </div>
+
+                        <div class="option-grid-4">
+                            <button class="priority-btn option-card option-card-compact" data-priority="normal">
+                                <div class="option-head-row">
+                                    <span class="option-title">Normal</span>
+                                    <span
+                                        class="info-tooltip-trigger"
+                                        data-tooltip="Prioritas bawaan Windows. Stabil untuk seluruh spesifikasi PC."
+                                    ><i class="ri-information-line"></i></span>
+                                </div>
+                            </button>
+
+                            <button class="priority-btn option-card option-card-compact" data-priority="aboveNormal">
+                                <div class="option-head-row">
+                                    <span class="option-title">Above Normal</span>
+                                    <span
+                                        class="info-tooltip-trigger"
+                                        data-tooltip="Direkomendasikan. Memberi porsi CPU di atas aplikasi latar belakang tanpa membebani sistem."
+                                    ><i class="ri-information-line"></i></span>
+                                </div>
+                            </button>
+
+                            <button class="priority-btn option-card option-card-compact" data-priority="high">
+                                <div class="option-head-row">
+                                    <span class="option-title">High</span>
+                                    <span
+                                        class="info-tooltip-trigger"
+                                        data-tooltip="Prioritas tinggi untuk menjaga kestabilan frame rate saat bermain."
+                                    ><i class="ri-information-line"></i></span>
+                                </div>
+                            </button>
+
+                            <button class="priority-btn option-card option-card-compact option-warning" data-priority="realtime">
+                                <div class="option-head-row">
+                                    <span class="option-title"><i class="ri-alert-line"></i> Realtime</span>
+                                    <span
+                                        class="info-tooltip-trigger"
+                                        data-tooltip="Menempatkan FiveM di atas proses sistem Windows. Dapat menyebabkan input macet saat beban CPU mencapai 100%."
+                                    ><i class="ri-information-line"></i></span>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="bento-card bento-span-2">
+                        <div class="bento-card-header">
+                            <div class="title-with-info">
+                                <h2>Alokasi Core CPU (Affinity)</h2>
+                                <span
+                                    class="info-tooltip-trigger"
+                                    tabindex="0"
+                                    data-tooltip="Pilih preset jumlah core atau pilih core secara spesifik untuk mengatur bitmask CPU Affinity."
+                                ><i class="ri-information-line"></i></span>
+                                <span id="cpuInfoText" class="inline-meta-tag">Mendeteksi CPU...</span>
+                            </div>
+                            <span id="currentAffinity" class="badge-pill">Semua Core</span>
+                        </div>
+
+                        <div class="option-grid-4">
+                            <button class="affinity-btn option-card option-card-compact" data-affinity="">
+                                <div class="option-head-row">
+                                    <span class="option-title">Semua Core</span>
+                                    <span
+                                        class="info-tooltip-trigger"
+                                        data-tooltip="Mengizinkan FiveM memakai seluruh thread CPU yang tersedia."
+                                    ><i class="ri-information-line"></i></span>
+                                </div>
+                            </button>
+
+                            <button class="affinity-btn option-card option-card-compact" data-affinity="F">
+                                <div class="option-head-row">
+                                    <span class="option-title">4 Core (0xF)</span>
+                                    <span
+                                        class="info-tooltip-trigger"
+                                        data-tooltip="Membatasi FiveM pada Core 0 hingga Core 3 (Bitmask 0xF)."
+                                    ><i class="ri-information-line"></i></span>
+                                </div>
+                            </button>
+
+                            <button class="affinity-btn option-card option-card-compact" data-affinity="3F">
+                                <div class="option-head-row">
+                                    <span class="option-title">6 Core (0x3F)</span>
+                                    <span
+                                        class="info-tooltip-trigger"
+                                        data-tooltip="Membatasi FiveM pada Core 0 hingga Core 5 (Bitmask 0x3F)."
+                                    ><i class="ri-information-line"></i></span>
+                                </div>
+                            </button>
+
+                            <button class="affinity-btn option-card option-card-compact" data-affinity="FF">
+                                <div class="option-head-row">
+                                    <span class="option-title">8 Core (0xFF)</span>
+                                    <span
+                                        class="info-tooltip-trigger"
+                                        data-tooltip="Membatasi FiveM pada Core 0 hingga Core 7 (Bitmask 0xFF)."
+                                    ><i class="ri-information-line"></i></span>
+                                </div>
+                            </button>
+                        </div>
+
+                        <div class="cpu-cores-section">
+                            <div class="cpu-cores-header">
+                                <div class="title-with-info">
+                                    <span class="affinity-presets-label">Pilihan Per Core</span>
+                                    <span id="perCoreProBadge" class="pro-lock-pill"><i class="ri-lock-line"></i> PRO</span>
+                                    <span
+                                        class="info-tooltip-trigger"
+                                        tabindex="0"
+                                        data-tooltip="Klik core tertentu untuk mengatur thread secara individual, misalnya menonaktifkan Core 0."
+                                    ><i class="ri-information-line"></i></span>
+                                </div>
+                                <span id="customAffinityMaskDisplay" class="core-mask-code">Mask: Semua Core</span>
+                            </div>
+                            <div id="cpuCoresGrid" class="cpu-cores-grid"></div>
+                        </div>
+                    </div>
+
+                    <div class="bento-card bento-span-2">
+                        <div class="bento-card-header">
+                            <div class="title-with-info">
+                                <h2>Jeda Koneksi Otomatis</h2>
+                                <span
+                                    class="info-tooltip-trigger"
+                                    tabindex="0"
+                                    data-tooltip="Waktu tunggu setelah FiveM.exe dijalankan sebelum sistem membuka tautan cfx.re/join ke server."
+                                ><i class="ri-information-line"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="launch-delay-row">
+                            <select id="launchDelay" class="form-select">
+                                <option value="10000">10 Detik (NVMe Cepat)</option>
+                                <option value="20000">20 Detik (Disarankan)</option>
+                                <option value="30000">30 Detik (Standar)</option>
+                                <option value="45000">45 Detik (Menengah)</option>
+                                <option value="60000">60 Detik (HDD)</option>
+                            </select>
+
+                            <button id="saveDelay" class="btn btn-primary"><i class="ri-save-line"></i> Simpan Jeda</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="viewCache" class="view-section hidden">
+                <div class="view-header">
+                    <div class="title-with-info">
+                        <h1>Cache Hub</h1>
+                        <span
+                            class="info-tooltip-trigger"
+                            tabindex="0"
+                            data-tooltip="Simpan folder server-cache terpisah untuk tiap server agar tidak perlu mengunduh ulang aset saat berganti server."
+                        ><i class="ri-information-line"></i></span>
+                    </div>
+                    <div class="view-header-actions">
+                        <span id="totalCacheDiskBadge" class="badge-pill">Total Disk: 0 B</span>
+                        <button id="refreshCacheHubBtn" class="btn btn-secondary">
+                            <i class="ri-refresh-line"></i> Hitung Ulang
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bento-grid">
+                    <div class="bento-card">
+                        <div class="bento-card-header">
+                            <div class="title-with-info">
+                                <h2>Buat atau Simpan Profil</h2>
+                                <span
+                                    class="info-tooltip-trigger"
+                                    tabindex="0"
+                                    data-tooltip="Buat profil cache baru atau salin cache FiveM yang sedang aktif ke profil pilihan Anda."
+                                ><i class="ri-information-line"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="form-stack">
+                            <input id="profileName" class="form-input" type="text" placeholder="Nama profil (misal: indopride, kota-kita)" />
+
+                            <div class="button-row">
+                                <button id="createProfile" class="btn btn-secondary"><i class="ri-add-line"></i> Buat Profil</button>
+                                <button id="saveCache" class="btn btn-primary"><i class="ri-save-line"></i> Simpan Cache Aktif</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bento-card">
+                        <div class="bento-card-header">
+                            <div class="title-with-info">
+                                <h2>Aksi Cepat</h2>
+                                <span
+                                    class="info-tooltip-trigger"
+                                    tabindex="0"
+                                    data-tooltip="Pilih profil dari daftar untuk dimuat ke FiveM atau dihapus."
+                                ><i class="ri-information-line"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="form-stack">
+                            <select id="profileSelect" class="form-select">
+                                <option value="">Memuat...</option>
+                            </select>
+
+                            <div class="button-row">
+                                <button id="loadCache" class="btn btn-primary"><i class="ri-folder-open-line"></i> Muat Cache</button>
+                                <button id="deleteProfile" class="btn btn-danger"><i class="ri-delete-bin-line"></i> Hapus Profil</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bento-card bento-span-2">
+                        <div class="bento-card-header">
+                            <div class="title-with-info">
+                                <h2>Daftar Profil Cache</h2>
+                                <span
+                                    class="info-tooltip-trigger"
+                                    tabindex="0"
+                                    data-tooltip="Daftar seluruh profil cache beserta ukuran penyimpanan dan server yang terhubung."
+                                ><i class="ri-information-line"></i></span>
+                            </div>
+                            <span id="activeCacheModeHint" class="badge-pill"><i class="ri-file-copy-2-line"></i> Mode: Salin Standar</span>
+                        </div>
+
+                        <div id="cacheProfilesGrid" class="cache-profiles-grid"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="viewMods" class="view-section hidden">
+                <div class="view-header">
+                    <div class="title-with-info">
+                        <h1>Mods Hub</h1>
+                        <span
+                            class="info-tooltip-trigger"
+                            tabindex="0"
+                            data-tooltip="Kelola beberapa folder mod di direktori FiveM.app (seperti mods, mods good, mods ime). Hanya folder bernama 'mods' yang dimuat oleh FiveM."
+                        ><i class="ri-information-line"></i></span>
+                    </div>
+                    <div class="view-header-actions">
+                        <span id="totalModsDiskBadge" class="badge-pill">Total Mods: 0 B</span>
+                        <button id="refreshModsHubBtn" class="btn btn-secondary">
+                            <i class="ri-refresh-line"></i> Pindai Ulang
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bento-grid">
+                    <div class="bento-card">
+                        <div class="bento-card-header">
+                            <div class="title-with-info">
+                                <h2><i class="ri-add-line"></i> Folder Mod Baru</h2>
+                                <span
+                                    class="info-tooltip-trigger"
+                                    tabindex="0"
+                                    data-tooltip="Buat folder profil mod kosong di direktori FiveM.app. Nama folder otomatis diawali kata 'mods '."
+                                ><i class="ri-information-line"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="form-stack">
+                            <input
+                                id="newModProfileName"
+                                class="form-input"
+                                type="text"
+                                placeholder="Nama profil mod (misal: pvp atau grafik)"
+                            />
+                            <div class="button-row">
+                                <button id="createModProfileBtn" type="button" class="btn btn-primary">
+                                    <i class="ri-add-line"></i> Buat Folder Mod
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bento-card">
+                        <div class="bento-card-header">
+                            <div class="title-with-info">
+                                <h2>Direktori Mods</h2>
+                                <span
+                                    class="info-tooltip-trigger"
+                                    tabindex="0"
+                                    data-tooltip="Saat Anda mengaktifkan profil lain, folder 'mods' aktif akan dikembalikan ke nama asalnya sebelum profil baru diubah menjadi 'mods'."
+                                ><i class="ri-information-line"></i></span>
+                            </div>
+                            <span id="activeModOriginBadge" class="badge-pill">Aktif: mods</span>
+                        </div>
+
+                        <div class="form-stack">
+                            <div class="path-display">
+                                <span class="path-icon"><i class="ri-folder-open-line"></i></span>
+                                <span id="modsBaseDirText">Mendeteksi FiveM.app...</span>
+                            </div>
+                            <div class="button-row">
+                                <button id="openActiveModsFolderBtn" type="button" class="btn btn-secondary">
+                                    <i class="ri-folder-open-line"></i> Buka Folder 'mods' Aktif
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bento-card bento-span-2">
+                        <div class="bento-card-header">
+                            <div class="title-with-info">
+                                <h2>Daftar Folder Mod</h2>
+                                <span
+                                    class="info-tooltip-trigger"
+                                    tabindex="0"
+                                    data-tooltip="Folder berlabel AKTIF adalah folder yang saat ini bernama 'mods'. Klik Aktifkan pada folder lain untuk menukarnya."
+                                ><i class="ri-information-line"></i></span>
+                            </div>
+                            <span id="modProfilesCountBadge" class="badge-pill">0 Folder</span>
+                        </div>
+
+                        <div id="modProfilesGrid" class="cache-profiles-grid"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="viewSettings" class="view-section hidden">
+                <div class="view-header">
+                    <div class="title-with-info">
+                        <h1>Pengaturan</h1>
+                        <span
+                            class="info-tooltip-trigger"
+                            tabindex="0"
+                            data-tooltip="Atur lisensi akun, lokasi FiveM.exe, metode tautan cache, tema warna, dan cadangan konfigurasi."
+                        ><i class="ri-information-line"></i></span>
+                    </div>
+                </div>
+
+                <div class="bento-grid">
+                    <div class="bento-card bento-span-2 account-tier-bento">
+                        <div class="bento-card-header">
+                            <div class="title-with-info">
+                                <h2>Status Lisensi Akun</h2>
+                                <span
+                                    class="info-tooltip-trigger"
+                                    tabindex="0"
+                                    data-tooltip="Masukkan kode lisensi untuk membuka fitur PRO atau Developer: manajemen server kustom, Fast Junction, CPU Affinity per core, tema tambahan, dan pemantau slot."
+                                ><i class="ri-information-line"></i></span>
+                            </div>
+                            <span id="settingsTierBadge" class="tier-badge tier-free">AKUN FREE</span>
+                        </div>
+
+                        <div class="activation-row">
+                            <input
+                                id="activationCodeInput"
+                                class="form-input"
+                                type="text"
+                                placeholder="Masukkan token aktivasi (contoh: PRO.ey... atau DEV.ey...)"
+                            />
+                            <button id="activateTierBtn" type="button" class="btn btn-primary"><i class="ri-key-2-line"></i> Aktifkan</button>
+                            <button id="openUpgradeInfoBtn" type="button" class="btn btn-secondary"><i class="ri-vip-crown-line"></i> Detail PRO</button>
+                        </div>
+
+                        <div class="quick-tier-pills">
+                            <span class="quick-tier-hint">Simulasi Akses Cepat:</span>
+                            <button type="button" class="quick-tier-btn" data-test-code="FREE"><i class="ri-user-line"></i> Free (Reset)</button>
+                            <button type="button" class="quick-tier-btn" data-test-code="PRO.eyJzdWIiOiJGaXZlTS1IdWIgVmVyaWZpZWQgUHJvIE1lbWJlciIsInRpZXIiOiJwcm8iLCJpYXQiOjE3MDAwMDAwMDAsImV4cCI6bnVsbCwibm9uY2UiOiJwcm85OTkwMDAxIn0.d70b3250f161b6107f0b3b6183291be15c3ae34526a8877355acef4b809d0307"><i class="ri-star-line"></i> Pro Token</button>
+                            <button type="button" class="quick-tier-btn" data-test-code="DEV.eyJzdWIiOiJDb3JlIEFyY2hpdGVjdHVyZSBEZXZlbG9wZXIiLCJ0aWVyIjoiZGV2ZWxvcGVyIiwiaWF0IjoxNzAwMDAwMDAwLCJleHAiOm51bGwsIm5vbmNlIjoiZGV2ODg4MDAwMSJ9.eb70fd17bc0cb0a8e6a9e6353390b611340ff79e35f730ee7157fa4d2b444543"><i class="ri-tools-line"></i> Dev Token</button>
+                        </div>
+                    </div>
+
+                    <div class="bento-card bento-span-2">
+                        <div class="bento-card-header">
+                            <div class="title-with-info">
+                                <h2>Lokasi FiveM.exe</h2>
+                                <span
+                                    class="info-tooltip-trigger"
+                                    tabindex="0"
+                                    data-tooltip="Lokasi file FiveM.exe di komputer Anda. Folder data dan mods akan dideteksi otomatis dari lokasi ini."
+                                ><i class="ri-information-line"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="path-picker-row">
+                            <div class="path-display">
+                                <span class="path-icon"><i class="ri-folder-2-line"></i></span>
+                                <span id="fivemPath">Memuat...</span>
+                            </div>
+                            <button id="browseBtn" class="btn btn-primary"><i class="ri-folder-open-line"></i> Pilih FiveM.exe</button>
+                        </div>
+                    </div>
+
+                    <div class="bento-card bento-span-2">
+                        <div class="bento-card-header">
+                            <div class="title-with-info">
+                                <h2><i class="ri-delete-bin-6-line"></i> Pembersih Cache &amp; Crash Dump FiveM</h2>
+                                <span
+                                    class="info-tooltip-trigger"
+                                    tabindex="0"
+                                    data-tooltip="Hapus file crash dump (.dmp) dan log lama di FiveM.app untuk menghemat ruang disk dan mencegah lag atau crash."
+                                ><i class="ri-information-line"></i></span>
+                            </div>
+                            <span id="trashTotalSizeBadge" class="badge-pill">Memindai...</span>
+                        </div>
+
+                        <div class="cleaner-stats-row">
+                            <div class="cleaner-stat-item">
+                                <span class="cleaner-stat-label"><i class="ri-bug-line"></i> Crash Dumps:</span>
+                                <span id="cleanerCrashesStat" class="cleaner-stat-value">0 B (0 file)</span>
+                            </div>
+                            <div class="cleaner-stat-item">
+                                <span class="cleaner-stat-label"><i class="ri-file-list-2-line"></i> Debug Logs:</span>
+                                <span id="cleanerLogsStat" class="cleaner-stat-value">0 B (0 file)</span>
+                            </div>
+                        </div>
+
+                        <div class="button-row">
+                            <button id="scanTrashBtn" type="button" class="btn btn-secondary">
+                                <i class="ri-refresh-line"></i> Pindai Ulang
+                            </button>
+                            <button id="cleanTrashBtn" type="button" class="btn btn-danger">
+                                <i class="ri-delete-bin-line"></i> Bersihkan Sampah
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="bento-card bento-span-2">
+                        <div class="bento-card-header">
+                            <div class="title-with-info">
+                                <h2>Metode Pergantian Cache</h2>
+                                <span
+                                    class="info-tooltip-trigger"
+                                    tabindex="0"
+                                    data-tooltip="Pilih metode pemuatan cache saat berganti server: Fast Directory Junction (tautan folder instan) atau Salin Standar."
+                                ><i class="ri-information-line"></i></span>
+                            </div>
+                            <span id="currentCacheModeBadge" class="badge-pill">Mode Salin Standar</span>
+                        </div>
+
+                        <div class="option-grid-2">
+                            <button class="cache-mode-btn option-card option-card-compact" data-cache-mode="junction">
+                                <div class="option-head-row">
+                                    <span class="option-title"><i class="ri-flashlight-line"></i> Fast Junction Mode</span>
+                                    <div class="option-head-badges">
+                                        <span id="junctionProBadge" class="pro-lock-pill"><i class="ri-lock-line"></i> PRO</span>
+                                        <span
+                                            class="info-tooltip-trigger"
+                                            data-tooltip="Menautkan folder cache secara instan lewat Windows Directory Junction tanpa menyalin ulang file ke disk."
+                                        ><i class="ri-information-line"></i></span>
+                                    </div>
+                                </div>
+                            </button>
+
+                            <button class="cache-mode-btn option-card option-card-compact" data-cache-mode="copy">
+                                <div class="option-head-row">
+                                    <span class="option-title"><i class="ri-file-copy-2-line"></i> Salin Standar</span>
+                                    <span
+                                        class="info-tooltip-trigger"
+                                        data-tooltip="Menyalin isi folder cache dari profil ke folder FiveM.app/data."
+                                    ><i class="ri-information-line"></i></span>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="bento-card bento-span-2">
+                        <div class="bento-card-header">
+                            <div class="title-with-info">
+                                <h2>Tema Tampilan</h2>
+                                <span
+                                    class="info-tooltip-trigger"
+                                    tabindex="0"
+                                    data-tooltip="Pilih skema warna aplikasi. Tema Midnight, Crimson, dan Monochrome memerlukan lisensi PRO atau Developer."
+                                ><i class="ri-information-line"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="theme-grid">
+                            <button class="theme-card" data-theme-choice="obsidian">
+                                <div class="theme-swatches">
+                                    <span style="background: #050507"></span>
+                                    <span style="background: #0D0E12"></span>
+                                    <span style="background: #00E599"></span>
+                                </div>
+                                <div class="option-head-row">
+                                    <span class="theme-name">Obsidian Cyber</span>
+                                    <span
+                                        class="info-tooltip-trigger"
+                                        data-tooltip="Skema gelap bawaan dengan aksen hijau emerald."
+                                    ><i class="ri-information-line"></i></span>
+                                </div>
+                            </button>
+
+                            <button class="theme-card" data-theme-choice="midnight">
+                                <div class="theme-swatches">
+                                    <span style="background: #0B0F19"></span>
+                                    <span style="background: #131B2E"></span>
+                                    <span style="background: #6366F1"></span>
+                                </div>
+                                <div class="option-head-row">
+                                    <span class="theme-name">Midnight Slate</span>
+                                    <span class="pro-lock-pill theme-pro-pill"><i class="ri-lock-line"></i> PRO</span>
+                                </div>
+                            </button>
+
+                            <button class="theme-card" data-theme-choice="crimson">
+                                <div class="theme-swatches">
+                                    <span style="background: #0C090A"></span>
+                                    <span style="background: #161113"></span>
+                                    <span style="background: #F43F5E"></span>
+                                </div>
+                                <div class="option-head-row">
+                                    <span class="theme-name">Crimson Amber</span>
+                                    <span class="pro-lock-pill theme-pro-pill"><i class="ri-lock-line"></i> PRO</span>
+                                </div>
+                            </button>
+
+                            <button class="theme-card" data-theme-choice="monochrome">
+                                <div class="theme-swatches">
+                                    <span style="background: #09090B"></span>
+                                    <span style="background: #1C1C21"></span>
+                                    <span style="background: #FFFFFF"></span>
+                                </div>
+                                <div class="option-head-row">
+                                    <span class="theme-name">Clean Monochrome</span>
+                                    <span class="pro-lock-pill theme-pro-pill"><i class="ri-lock-line"></i> PRO</span>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="bento-card bento-span-2">
+                        <div class="bento-card-header">
+                            <div class="title-with-info">
+                                <h2>Cadangkan &amp; Pulihkan Konfigurasi</h2>
+                                <span
+                                    class="info-tooltip-trigger"
+                                    tabindex="0"
+                                    data-tooltip="Simpan pengaturan ke file JSON atau muat kembali konfigurasi yang sudah dicadangkan."
+                                ><i class="ri-information-line"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="button-row">
+                            <button id="exportConfig" class="btn btn-secondary"><i class="ri-upload-2-line"></i> Ekspor Konfigurasi</button>
+                            <button id="importConfig" class="btn btn-secondary"><i class="ri-download-2-line"></i> Impor Konfigurasi</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="launchStatusBar" class="launch-status-bar hidden">
+        <div class="launch-status-main">
+            <div class="launch-status-info">
+                <span id="launchSpinner" class="launch-spinner"></span>
+                <span id="launchStepBadge" class="launch-step-badge">MENJALANKAN</span>
+                <span id="launchStatusText">Menyiapkan FiveM...</span>
+            </div>
+            <div class="launch-status-actions">
+                <button id="launchConnectNowBtn" class="btn btn-primary btn-sm hidden"><i class="ri-flashlight-line"></i> Masuk Sekarang</button>
+                <button id="launchCancelBtn" class="btn btn-danger btn-sm hidden"><i class="ri-close-line"></i> Batalkan</button>
+            </div>
+        </div>
+        <div class="launch-progress-track">
+            <div id="launchProgressFill" class="launch-progress-fill" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <div id="serverDetailModal" class="drawer-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="detailServerName">
+        <div class="server-detail-drawer" id="serverDetailDrawer">
+            <div class="drawer-header-sticky">
+                <div class="drawer-header-left">
+                    <div class="drawer-header-title-row">
+                        <h2 id="detailServerName" class="detail-server-name">Nama Server</h2>
+                        <div id="detailStatusPill" class="status-pill online">
+                            <span class="status-dot"></span>
+                            <span id="detailStatusText">Online</span>
+                        </div>
+                        <span id="detailHeaderPing" class="server-ping-badge ping-muted hidden">
+                            <i class="ri-signal-tower-line"></i> --
+                        </span>
+                    </div>
+                    <span id="detailHeaderEndpoint" class="drawer-header-endpoint">cfx.re/join/...</span>
+                </div>
+                <button id="detailCloseBtn" type="button" class="drawer-close-btn" aria-label="Tutup Detail Server" title="Tutup (Esc)">
+                    <i class="ri-close-line"></i>
+                </button>
+            </div>
+
+            <div class="drawer-scroll-body">
+                <div id="detailBannerHeader" class="detail-banner-header">
+                    <div class="detail-banner-overlay"></div>
+                    <div class="detail-banner-content">
+                        <div id="detailLogoWrap" class="detail-logo-wrap"></div>
+                        <div class="detail-title-block">
+                            <p id="detailProjectDesc" class="detail-project-desc">Memuat informasi server...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-body-content">
+                    <div class="detail-meta-grid">
+                        <div class="detail-meta-box">
+                            <span class="detail-meta-label">Latensi Ping</span>
+                            <span id="detailPing" class="detail-meta-value"><i class="ri-signal-tower-line"></i> -</span>
+                        </div>
+                        <div class="detail-meta-box">
+                            <span class="detail-meta-label">Pemain Aktif</span>
+                            <span id="detailPlayersCount" class="detail-meta-value">0 / 0</span>
+                        </div>
+                        <div class="detail-meta-box">
+                            <span class="detail-meta-label">Game Build</span>
+                            <span id="detailBuild" class="detail-meta-value">-</span>
+                        </div>
+                        <div class="detail-meta-box">
+                            <span class="detail-meta-label">OneSync</span>
+                            <span id="detailOneSync" class="detail-meta-value">-</span>
+                        </div>
+                        <div class="detail-meta-box">
+                            <span class="detail-meta-label">Pemilik</span>
+                            <span id="detailOwner" class="detail-meta-value">-</span>
+                        </div>
+                        <div class="detail-meta-box">
+                            <span class="detail-meta-label">Resources</span>
+                            <span id="detailResourcesCount" class="detail-meta-value">0 Script</span>
+                        </div>
+                        <div class="detail-meta-box">
+                            <span class="detail-meta-label">Profil Cache</span>
+                            <span id="detailCacheProfile" class="detail-meta-value">-</span>
+                        </div>
+                    </div>
+
+                    <div id="detailTagsContainer" class="detail-tags-row"></div>
+
+                    <div class="detail-players-section">
+                        <div class="detail-players-header">
+                            <span id="detailPlayersHeaderTitle" class="detail-section-title"><i class="ri-group-line"></i> Pemain Online</span>
+                            <input
+                                id="detailPlayerSearchInput"
+                                class="form-input detail-player-search"
+                                type="text"
+                                placeholder="Cari nama pemain..."
+                                autocomplete="off"
+                            />
+                        </div>
+                        <div id="detailPlayersList" class="detail-players-list"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="drawer-footer-sticky">
+                <button id="detailSlotWatchBtn" type="button" class="btn btn-secondary">
+                    <i class="ri-notification-3-line"></i> Pantau Slot
+                </button>
+                <button id="detailConnectBtn" type="button" class="btn btn-primary detail-connect-btn">
+                    <i class="ri-play-line"></i> Masuk ke Server
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="serverFormModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+        <div class="server-form-dialog">
+            <div class="modal-header-row">
+                <h3 id="serverFormTitle" class="confirm-title">Tambah Server</h3>
+                <button id="serverFormCloseBtn" class="toast-close" aria-label="Tutup"><i class="ri-close-line"></i></button>
+            </div>
+
+            <form id="serverCrudForm" class="form-stack">
+                <input id="serverFormId" type="hidden" value="" />
+                <input id="serverFormLogo" type="hidden" value="" />
+                <input id="serverFormBanner" type="hidden" value="" />
+
+                <div>
+                    <label class="form-label" for="serverFormConnect">Kode Join atau URL Cfx.re *</label>
+                    <div class="path-picker-row">
+                        <input
+                            id="serverFormConnect"
+                            class="form-input"
+                            type="text"
+                            placeholder="Contoh: cfx.re/join/237yxy atau 237yxy"
+                            required
+                        />
+                        <button id="fetchCfxDataBtn" type="button" class="btn btn-secondary"><i class="ri-search-line"></i> Ambil Info</button>
+                    </div>
+                    <span id="serverFormEndpointHint" class="form-hint">Masukkan kode join lalu klik Ambil Info untuk memuat data server dari Cfx.re.</span>
+                </div>
+
+                <div id="cfxFormPreviewCard" class="cfx-preview-card hidden">
+                    <div id="cfxPreviewBanner" class="cfx-preview-banner">
+                        <div class="cfx-preview-overlay"></div>
+                        <div class="cfx-preview-content">
+                            <img id="cfxPreviewLogo" class="cfx-preview-logo" alt="Logo" />
+                            <div class="cfx-preview-info">
+                                <span id="cfxPreviewTitle" class="cfx-preview-title">-</span>
+                                <span id="cfxPreviewMeta" class="cfx-preview-meta">Logo &amp; banner dari Cfx.re</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="form-label" for="serverFormName">Nama Server *</label>
+                    <input
+                        id="serverFormName"
+                        class="form-input"
+                        type="text"
+                        placeholder="Terisi otomatis dari Cfx.re atau ketik manual"
+                        required
+                    />
+                </div>
+
+                <div class="form-row-2">
+                    <div>
+                        <label class="form-label" for="serverFormBuild">Game Build</label>
+                        <input
+                            id="serverFormBuild"
+                            class="form-input"
+                            type="text"
+                            placeholder="Contoh: 3258"
+                        />
+                    </div>
+                    <div>
+                        <label class="form-label" for="serverFormCacheProfile">Profil Cache</label>
+                        <input
+                            id="serverFormCacheProfile"
+                            class="form-input"
+                            type="text"
+                            placeholder="Otomatis mengikuti nama server"
+                        />
+                    </div>
+                </div>
+
+                <div>
+                    <label class="form-label" for="serverFormModProfile">Profil Mod (Opsional)</label>
+                    <select id="serverFormModProfile" class="form-select">
+                        <option value="">Tetap gunakan folder mod yang sedang aktif</option>
+                    </select>
+                    <span class="form-hint">Jika dipilih, folder mod ini otomatis diaktifkan sebelum FiveM dijalankan.</span>
+                </div>
+
+                <div class="confirm-actions">
+                    <button id="serverFormCancelBtn" type="button" class="btn btn-secondary">Batal</button>
+                    <button id="serverFormSaveBtn" type="submit" class="btn btn-primary"><i class="ri-save-line"></i> Simpan Server</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="upgradeProModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+        <div class="upgrade-pro-dialog">
+            <div class="modal-header-row">
+                <div class="title-with-info">
+                    <h3 class="confirm-title"><i class="ri-vip-crown-line"></i> Lisensi PRO &amp; Developer</h3>
+                </div>
+                <button id="upgradeProCloseBtn" class="toast-close" aria-label="Tutup"><i class="ri-close-line"></i></button>
+            </div>
+
+            <p class="upgrade-lead">
+                Aktifkan lisensi PRO atau Developer untuk membuka fitur lanjutan berikut:
+            </p>
+
+            <div class="pro-benefits-list">
+                <div class="pro-benefit-item">
+                    <span class="pro-benefit-icon"><i class="ri-add-circle-line"></i></span>
+                    <div>
+                        <strong>Manajemen Server Kustom</strong>
+                        <p>Tambah, ubah, dan hapus daftar server lengkap dengan pengambilan ikon dan banner dari Cfx.re.</p>
+                    </div>
+                </div>
+                <div class="pro-benefit-item">
+                    <span class="pro-benefit-icon"><i class="ri-flashlight-line"></i></span>
+                    <div>
+                        <strong>Tautan Cache Instan (Fast Junction)</strong>
+                        <p>Ganti profil cache lewat Windows Directory Junction tanpa menyalin ulang file berukuran besar.</p>
+                    </div>
+                </div>
+                <div class="pro-benefit-item">
+                    <span class="pro-benefit-icon"><i class="ri-cpu-line"></i></span>
+                    <div>
+                        <strong>Alokasi Core CPU Individual &amp; Tema Tambahan</strong>
+                        <p>Atur thread CPU per core dan gunakan tema Midnight Slate, Crimson Amber, serta Clean Monochrome.</p>
+                    </div>
+                </div>
+                <div class="pro-benefit-item">
+                    <span class="pro-benefit-icon"><i class="ri-notification-3-line"></i></span>
+                    <div>
+                        <strong>Pemantau Slot Server Otomatis</strong>
+                        <p>Pantau jumlah pemain di latar belakang dan beri notifikasi saat tersedia slot kosong.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="upgrade-activate-box">
+                <label class="form-label" for="modalActivationInput">Kode Aktivasi</label>
+                <div class="path-picker-row">
+                    <input
+                        id="modalActivationInput"
+                        class="form-input"
+                        type="text"
+                        placeholder="Masukkan token aktivasi (contoh: PRO.ey... atau DEV.ey...)"
+                    />
+                    <button id="modalActivateBtn" type="button" class="btn btn-primary"><i class="ri-key-2-line"></i> Aktifkan</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modNoteModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+        <div class="confirm-dialog mod-note-dialog">
+            <div class="modal-header-row">
+                <h3 id="modNoteModalTitle" class="confirm-title"><i class="ri-edit-line"></i> Catatan Folder Mod</h3>
+                <button id="modNoteCloseBtn" type="button" class="toast-close" aria-label="Tutup"><i class="ri-close-line"></i></button>
+            </div>
+            <p id="modNoteModalSub" class="confirm-message" style="margin-bottom: 10px;">
+                Tulis keterangan singkat untuk menandai isi paket mod pada folder ini.
+            </p>
+            <form id="modNoteForm" class="server-form" style="gap: 12px;">
+                <input id="modNoteTargetProfile" type="hidden" value="" />
+                <div>
+                    <label class="form-label" for="modNoteInput">Catatan</label>
+                    <textarea
+                        id="modNoteInput"
+                        class="form-input mod-note-textarea"
+                        rows="3"
+                        maxlength="250"
+                        placeholder="Contoh: Grafik NVE + Sound Pack Senjata + Citizen Ringan"
+                    ></textarea>
+                    <span class="form-hint">Kosongkan isi catatan lalu simpan untuk menghapusnya.</span>
+                </div>
+                <div class="confirm-actions">
+                    <button id="modNoteCancelBtn" type="button" class="btn btn-secondary">Batal</button>
+                    <button id="modNoteSaveBtn" type="submit" class="btn btn-primary"><i class="ri-save-line"></i> Simpan Catatan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="confirmModal" class="modal-backdrop hidden" role="dialog" aria-modal="true">
+        <div class="confirm-dialog">
+            <h3 id="confirmModalTitle" class="confirm-title">Konfirmasi</h3>
+            <p id="confirmModalMessage" class="confirm-message"></p>
+            <div class="confirm-actions">
+                <button id="confirmModalCancel" class="btn btn-secondary">Batal</button>
+                <button id="confirmModalOk" class="btn btn-primary">Lanjutkan</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="floatingGlassTooltip" class="floating-glass-tooltip hidden" role="tooltip"></div>
+
+    <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

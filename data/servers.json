@@ -1,0 +1,29 @@
+[
+    {
+        "id": "indopride",
+        "name": "INDOPRIDE RP",
+        "build": "3258",
+        "logo": "indopride.png",
+        "connect": "cfx.re/join/237yxy",
+        "endpoint": "237yxy",
+        "cacheProfile": "indopride"
+    },
+    {
+        "id": "jing",
+        "name": "JING ARENA",
+        "build": "3788",
+        "logo": "jing.png",
+        "connect": "cfx.re/join/98yrzem",
+        "endpoint":"98yrzem",
+        "cacheProfile": "jing"
+    },
+    {
+        "id": "ime",
+        "name": "ime roleplay",
+        "build": "-",
+        "logo": "ime.png",
+        "connect": "cfx.re/join/zrvmg4",
+        "endpoint": "zrvmg4",
+        "cacheProfile": "ime"
+    }
+]
